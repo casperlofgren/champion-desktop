@@ -57,5 +57,33 @@ namespace champion_desktop
         {
             return dragondata.champions;
         }
+
+        public Champion getChampionById(string id)
+        {
+            var champ = dragondata.champions.Find(champion => champion.key == id);
+            if (champ != null)
+            {
+                return champ;
+            }
+            else
+            {
+                // TODO: do something better than to return null
+                return null;
+            }
+        }
+
+        public Champion getChampionByName(string name)
+        {
+            var champ = dragondata.champions.Find(champion => champion.id == name);
+            if (champ != null)
+            {
+                return champ;
+            }
+            else
+            {
+                // TODO: do something better than to return null
+                return null;
+            }
+        }
     }
 }
