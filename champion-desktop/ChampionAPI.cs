@@ -36,11 +36,6 @@ namespace champion_desktop
             }
         }
 
-        private static async Task<string> POSTRequest(string method)
-        {
-            return "";
-        }
-
         // API calls
         public string getInfo()
         {
