@@ -4,7 +4,8 @@
   "description": "Utilities for formatting ddragon data",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "format": "node champion-format.js"
   },
   "author": "Casper Löfgren",
   "license": "ISC",
