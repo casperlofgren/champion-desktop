@@ -86,7 +86,6 @@ namespace champion_desktop
             return Task.Run(() => { return GETRequest(requestdata); }).Result;
         }
 
-
         // General
         // Requests general site information
         public string getInfo(string elo = "")
