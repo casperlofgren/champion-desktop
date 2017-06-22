@@ -23,7 +23,7 @@ namespace champion_desktop
         }
 
         // Request methods
-        private static async Task<string> GETRequest(string method, string options = "")
+        private async Task<string> GETRequest(string method, string options = "")
         {
             var response = await client.GetAsync("http://api.champion.gg/" + apiver + "/" + method + "?api_key=" + apikey + "&" + options);
             if (response.IsSuccessStatusCode)
