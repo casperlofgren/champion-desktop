@@ -23,9 +23,9 @@ namespace champion_desktop
         }
 
         // Request methods
-        private async Task<string> GETRequest(string method, string options = "")
+        private async Task<string> GETRequest(string method)
         {
-            var response = await client.GetAsync("http://api.champion.gg/" + apiver + "/" + method + "?api_key=" + apikey + "&" + options);
+            var response = await client.GetAsync("http://api.champion.gg/" + apiver + "/" + method + "&api_key=" + apikey);
             if (response.IsSuccessStatusCode)
             {
                 return await response.Content.ReadAsStringAsync();
@@ -37,9 +37,64 @@ namespace champion_desktop
         }
 
         // API calls
-        public string getInfo()
+
+        // Champions
+        // Requests general champs information
+        public string getChampions(int limit = 100, int skip = 0, string elo = "", string champData = "", string sort = "", Boolean abridged = false)
         {
-            return Task.Run(() => { return GETRequest("general"); }).Result;
+            string requestdata = String.Format("champions?limit={0}&skip={1}&elo={2}&champData={3}&sort={4}&abridged={5}", limit, skip, elo, champData, sort, abridged);
+            return Task.Run(() => { return GETRequest(requestdata); }).Result;
+        }
+
+        // Requests specific champ information
+        public string getChampion(int id, int limit = 100, int skip = 0, string elo = "", string champData = "", string sort = "")
+        {
+            string requestdata = String.Format("champions/{0}?limit={1}&skip={2}&elo={3}&champData={4}&sort={5}", id, limit, skip, elo, champData, sort);
+            return Task.Run(() => { return GETRequest(requestdata); }).Result;
+        }
+
+        // Requests specific champ information in a specific role
+        public string getChampionInRole(int id, string role, int limit = 100, int skip = 0, string elo = "", string champData = "")
+        {
+            string requestdata = String.Format("champions/{0}/{1}?limit={2}&skip={3}&elo={4}&champData={5}", id, role, limit, skip, elo, champData);
+            return Task.Run(() => { return GETRequest(requestdata); }).Result;
+        }
+
+        // Requests matchups for a specific champ in a specific role
+        public string getMatchupsInRole(int id, string role, string elo = "", int skip = 0, int limit = 10)
+        {
+            string requestdata = String.Format("champions/{0}/{1}/matchups?elo={2}&skip={3}&limit={4}", id, role, elo, skip, limit);
+            return Task.Run(() => { return GETRequest(requestdata); }).Result;
+        }
+
+        // Requests information about a specific matchup
+        public string getSpecificMatchupInRole(int id, int enemy, string role, string elo = "")
+        {
+            string requestdata = String.Format("champions/{0}/matchups/{1}/{2}?elo={3}", id, enemy, role, elo);
+            return Task.Run(() => { return GETRequest(requestdata); }).Result;
+        }
+
+        // Requests matchups for a specific champ
+        public string getMatchups(int id, string elo = "", int skip = 0, int limit = 10)
+        {
+            string requestdata = String.Format("champions/{0}/matchups?elo={1}&skip={2}&limit={3}", id, elo, skip, limit);
+            return Task.Run(() => { return GETRequest(requestdata); }).Result;
+        }
+
+
+        // General
+        // Requests general site information
+        public string getInfo(string elo = "")
+        {
+            string requestdata = String.Format("general?elo={0}", elo);
+            return Task.Run(() => { return GETRequest(requestdata); }).Result;
+        }
+
+        // Requests overall performance champ data sets (as in championgg landing page)
+        public string getOverall(string elo = "")
+        {
+            string requestdata = String.Format("overall?elo={0}", elo);
+            return Task.Run(() => { return GETRequest(requestdata); }).Result;
         }
     }
 }
