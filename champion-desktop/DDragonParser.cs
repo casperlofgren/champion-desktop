@@ -74,7 +74,7 @@ namespace champion_desktop
 
         public Champion getChampionByName(string name)
         {
-            var champ = dragondata.champions.Find(champion => champion.id == name);
+            var champ = dragondata.champions.Find(champion => champion.name == name); // use champion.name instead of champion.id
             if (champ != null)
             {
                 return champ;
@@ -84,6 +84,18 @@ namespace champion_desktop
                 // TODO: do something better than to return null
                 return null;
             }
+        }
+
+        public List<String> getChampionList()
+        {
+            List<String> champions = new List<String>();
+
+            foreach (var champion in dragondata.champions)
+            {
+                champions.Add(champion.name);
+            }
+
+            return champions;
         }
     }
 }
