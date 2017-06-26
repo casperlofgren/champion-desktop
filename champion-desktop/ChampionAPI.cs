@@ -41,6 +41,19 @@ namespace champion_desktop
             }
         }
 
+        private async Task<string> GETDepractedRequest(string method)
+        {
+            var response = await client.GetAsync("http://api.champion.gg/" + method + "?api_key=" + apikey);
+            if (response.IsSuccessStatusCode)
+            {
+                return await response.Content.ReadAsStringAsync();
+            }
+            else
+            {
+                return "fail";
+            }
+        }
+
         // API calls
 
         // Champions
@@ -99,6 +112,82 @@ namespace champion_desktop
         {
             string requestdata = String.Format("overall?elo={0}", elo);
             return Task.Run(() => { return GETRequest(requestdata); }).Result;
+        }
+
+
+        // Depracted API calls
+
+        // Champion
+        // All champions' data
+        public string getAllChampionData()
+        {
+            return Task.Run(() => { return GETDepractedRequest("champion"); }).Result;
+        }
+
+        // All data / General Data
+        public string getChampionData(string champion, Boolean general = false)
+        {
+            return Task.Run(() => { return GETDepractedRequest("champion/" + champion + (general ? "/general" : "")); }).Result;
+        }
+
+        // Most Popular item set
+        public string getMostPopularItemSet(string champion)
+        {
+            return Task.Run(() => { return GETDepractedRequest("champion/" + champion + "/items/finished/mostPopular"); }).Result;
+        }
+
+        // Most Popular starting item set
+        public string getMostPopularStartingItemSet(string champion)
+        {
+            return Task.Run(() => { return GETDepractedRequest("champion/" + champion + "/items/starters/mostPopular"); }).Result;
+        }
+
+        // Most Popular skill order information
+        public string getMostPopularSkillOrder(string champion)
+        {
+            return Task.Run(() => { return GETDepractedRequest("champion/" + champion + "/skills/mostPopular"); }).Result;
+        }
+
+        // Most Popular summoner spells
+        public string getMostPopularSummoners(string champion)
+        {
+            return Task.Run(() => { return GETDepractedRequest("champion/" + champion + "/summoners/mostPopular"); }).Result;
+        }
+
+        // Most popular runes information
+        public string getMostPopularRunes(string champion)
+        {
+            return Task.Run(() => { return GETDepractedRequest("champion/" + champion + "/runes/mostPopular"); }).Result;
+        }
+
+        // Most Winning item set
+        public string getMostWinningItemSet(string champion)
+        {
+            return Task.Run(() => { return GETDepractedRequest("champion/" + champion + "/items/finished/mostWins"); }).Result;
+        }
+
+        // Most Winning starting item set
+        public string getMostWinningStartingItemSet(string champion)
+        {
+            return Task.Run(() => { return GETDepractedRequest("champion/" + champion + "/items/starters/mostWins"); }).Result;
+        }
+
+        // Most Winning skill order information
+        public string getMostWinningSkillOrder(string champion)
+        {
+            return Task.Run(() => { return GETDepractedRequest("champion/" + champion + "/skills/mostWins"); }).Result;
+        }
+
+        // Most Winning summoner spells
+        public string getMostWinningSummoners(string champion)
+        {
+            return Task.Run(() => { return GETDepractedRequest("champion/" + champion + "/summoners/mostWins"); }).Result;
+        }
+
+        // Most Winning runes information
+        public string getMostWinningRunes(string champion)
+        {
+            return Task.Run(() => { return GETDepractedRequest("champion/" + champion + "/runes/mostWins"); }).Result;
         }
     }
 }
